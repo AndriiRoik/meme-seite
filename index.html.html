@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Memes – eine kleine Einführung</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root {
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  --bg: #E6ECF1;
+  --paper: #FFFFFF;
+  --ink: #15191D;
+  --muted: #56616B;
+  --blue: #2B59C3;
+  --yellow: #FFD23F;
+  --line: #15191D;
+  --macro: "Anton", Impact, "Haettenschweiler", "Arial Narrow Bold", sans-serif;
+  --body: "Bricolage Grotesque", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161B22; --paper: #1F262F; --ink: #EEF2F5; --muted: #A5B0BA;
+    --blue: #7FA3F5; --yellow: #FFD23F; --line: #EEF2F5;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #161B22; --paper: #1F262F; --ink: #EEF2F5; --muted: #A5B0BA;
+  --blue: #7FA3F5; --yellow: #FFD23F; --line: #EEF2F5;
+}
+*, *::before, *::after { box-sizing: inherit; }
+html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--body); font-size: 1.0625rem; line-height: 1.55;
+}
+a { color: var(--blue); }
+:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+.wrap { max-width: 68rem; margin: 0 auto; padding: 0 1.25rem; }
+.prose { max-width: 38rem; }
+h2 {
+  font-family: var(--macro); font-weight: 400; font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.05; margin: 0 0 1rem; letter-spacing: 0.01em;
+}
+p { margin: 0 0 1rem; }
+section { padding: 4.5rem 0; }
+
+/* Hero: the page itself as an image macro */
+.hero { padding: 2rem 0 3rem; }
+.macro {
+  position: relative; background: var(--blue);
+  border: 3px solid var(--line); min-height: min(78vh, 40rem);
+  display: flex; flex-direction: column; justify-content: space-between; align-items: center;
+  padding: 1.5rem 1rem; overflow: hidden; text-align: center;
+}
+.macro .top, .macro .bottom {
+  font-family: var(--macro); color: #fff; text-transform: uppercase;
+  -webkit-text-stroke: 0.06em #000; paint-order: stroke fill;
+  text-shadow: 0 0 0.02em #000;
+  line-height: 0.95; margin: 0; position: relative; z-index: 1;
+}
+.macro .top { font-size: clamp(3rem, 12vw, 8.5rem); }
+.macro .bottom { font-size: clamp(1.6rem, 5.5vw, 3.8rem); }
+.macro .subject {
+  font-size: clamp(6rem, 22vw, 14rem); line-height: 1; position: relative; z-index: 1;
+  filter: drop-shadow(0 6px 0 rgba(0,0,0,.25));
+  animation: wobble 2.4s ease-in-out 0.3s 2;
+}
+.macro::before {
+  content: ""; position: absolute; inset: 0;
+  background: repeating-conic-gradient(from 0deg at 50% 55%, rgba(255,255,255,.09) 0 10deg, transparent 10deg 20deg);
+}
+@keyframes wobble { 0%,100% { transform: rotate(0) } 25% { transform: rotate(-6deg) } 75% { transform: rotate(6deg) } }
+@media (prefers-reduced-motion: reduce) { .macro .subject { animation: none; } }
+.intro { display: grid; gap: 2rem; grid-template-columns: 1fr; margin-top: 2.5rem; }
+.intro p.lead { font-size: 1.35rem; line-height: 1.45; font-weight: 600; max-width: 34rem; }
+@media (min-width: 50rem) { .intro { grid-template-columns: 1.1fr 1fr; } }
+
+/* Definition */
+.def { background: var(--paper); border-top: 3px solid var(--line); border-bottom: 3px solid var(--line); }
+.def-grid { display: grid; gap: 2.5rem; }
+@media (min-width: 50rem) { .def-grid { grid-template-columns: 1fr 1fr; align-items: start; } }
+.quote {
+  font-size: 1.5rem; line-height: 1.35; font-weight: 800; margin: 0;
+  border-left: 8px solid var(--yellow); padding-left: 1.25rem;
+}
+.quote small { display: block; font-size: 1rem; font-weight: 400; color: var(--muted); margin-top: .75rem; }
+
+/* Timeline */
+.timeline { list-style: none; margin: 2rem 0 0; padding: 0; border-left: 3px solid var(--line); }
+.timeline li { position: relative; padding: 0 0 2rem 1.75rem; max-width: 40rem; }
+.timeline li::before {
+  content: ""; position: absolute; left: -0.6rem; top: 0.45rem;
+  width: 1.05rem; height: 1.05rem; background: var(--yellow); border: 3px solid var(--line); border-radius: 50%;
+}
+.timeline .year { font-family: var(--macro); font-size: 1.9rem; line-height: 1; display: block; margin-bottom: .3rem; }
+.timeline h3 { margin: 0 0 .25rem; font-size: 1.15rem; }
+.timeline p { margin: 0; color: var(--muted); }
+
+/* Anatomy */
+.anatomy { background: var(--yellow); color: #15191D; border-top: 3px solid #15191D; border-bottom: 3px solid #15191D; }
+.anatomy a { color: #15191D; }
+.parts { display: grid; gap: 1.5rem; margin-top: 2rem; }
+@media (min-width: 44rem) { .parts { grid-template-columns: repeat(3, 1fr); } }
+.part h3 { font-size: 1.2rem; margin: 0 0 .4rem; }
+.part p { margin: 0; }
+
+/* Generator */
+.gen { display: grid; gap: 2rem; margin-top: 2rem; }
+@media (min-width: 52rem) { .gen { grid-template-columns: 1fr 22rem; align-items: start; } }
+.canvas {
+  aspect-ratio: 1 / 1; border: 3px solid var(--line); position: relative; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: space-between; align-items: center;
+  padding: 4% 3%; text-align: center; max-width: 34rem; width: 100%;
+}
+.canvas .t {
+  font-family: var(--macro); color: #fff; text-transform: uppercase; margin: 0;
+  -webkit-text-stroke: 0.07em #000; paint-order: stroke fill;
+  font-size: clamp(1.6rem, 6.5vw, 3.2rem); line-height: 1; word-break: break-word; min-height: 1em;
+}
+.canvas .e { font-size: clamp(5rem, 20vw, 11rem); line-height: 1; }
+.controls label { display: block; font-weight: 600; margin: 0 0 .35rem; }
+.controls input[type="text"] {
+  width: 100%; font: inherit; padding: .7rem .8rem; margin-bottom: 1.1rem;
+  background: var(--paper); color: var(--ink); border: 3px solid var(--line); border-radius: 0;
+}
+.pickers { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.25rem; }
+.pick {
+  font-size: 1.8rem; width: 3.4rem; height: 3.4rem; border: 3px solid var(--line);
+  background: var(--paper); cursor: pointer; border-radius: 0;
+}
+.pick[aria-pressed="true"] { background: var(--yellow); }
+.btn {
+  font: inherit; font-weight: 800; padding: .75rem 1.1rem; border: 3px solid var(--line);
+  background: var(--ink); color: var(--bg); cursor: pointer; border-radius: 0;
+  box-shadow: 4px 4px 0 var(--blue);
+}
+.btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--blue); }
+.hint { color: var(--muted); font-size: .95rem; margin-top: 1rem; }
+
+/* Rules */
+.rules { display: grid; gap: 1.25rem 2.5rem; margin-top: 1.5rem; }
+@media (min-width: 44rem) { .rules { grid-template-columns: 1fr 1fr; } }
+.rules div h3 { margin: 0 0 .3rem; font-size: 1.15rem; }
+.rules div p { margin: 0; color: var(--muted); }
+
+footer { border-top: 3px solid var(--line); padding: 2rem 0 3rem; color: var(--muted); font-size: .95rem; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="macro" role="img" aria-label="Eine Ente im Stil eines klassischen Memes, oben der Text 'Memes', unten 'Warum wir alle mitlachen'">
+      <p class="top">Memes</p>
+      <div class="subject" aria-hidden="true">🦆</div>
+      <p class="bottom">Warum wir alle mitlachen</p>
+    </div>
+    <div class="intro">
+      <p class="lead">Ein Bild, ein Satz, ein Insider-Witz für Millionen: Memes sind die Volkskunst des Internets. Hier erfährst du, woher sie kommen, wie sie funktionieren – und kannst gleich dein eigenes bauen.</p>
+      <p class="prose">Memes verbreiten sich, weil sie leicht zu kopieren und leicht zu verändern sind. Jede Person, die ein Meme teilt, gibt ihm einen neuen Dreh. So entsteht aus einem einzelnen Bild eine ganze Unterhaltung, die sich über Plattformen, Länder und Sprachen hinweg fortsetzt.</p>
+    </div>
+  </div>
+</header>
+
+<section class="def">
+  <div class="wrap def-grid">
+    <div class="prose">
+      <h2>Was ist eigentlich ein Meme?</h2>
+      <p>Das Wort ist älter als das Internet. Der Biologe Richard Dawkins prägte es 1976 in seinem Buch „Das egoistische Gen“. Er suchte einen Begriff für Ideen, Melodien oder Redewendungen, die sich von Kopf zu Kopf weitergeben – ähnlich wie Gene von Generation zu Generation.</p>
+      <p>Heute meinen wir damit meist Bilder, Videos oder Textformate, die im Netz geteilt, abgewandelt und neu kombiniert werden.</p>
+    </div>
+    <p class="quote">Ein Meme ist eine Idee, die sich selbst kopiert – und dabei jedes Mal ein bisschen verändert.
+      <small>Frei zusammengefasst nach Dawkins’ Grundgedanken</small></p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Eine kurze Meme-Geschichte</h2>
+    <ol class="timeline">
+      <li><span class="year">1976</span><h3>Das Wort entsteht</h3><p>Richard Dawkins erfindet den Begriff „Meme“ als kulturelles Gegenstück zum Gen.</p></li>
+      <li><span class="year">1996</span><h3>Das tanzende Baby</h3><p>Eine 3D-Animation eines tanzenden Babys wandert per E-Mail um die Welt – eines der ersten viralen Internetphänomene.</p></li>
+      <li><span class="year">2007</span><h3>Katzen übernehmen</h3><p>LOLcats machen das Format „Tierfoto plus fehlerhafter Text“ berühmt. Das Image-Macro wird zum Standard.</p></li>
+      <li><span class="year">2008</span><h3>Rickrolling</h3><p>Ein harmlos wirkender Link führt überraschend zu einem Musikvideo aus den 80ern. Der Streich wird zum Dauerbrenner.</p></li>
+      <li><span class="year">2013</span><h3>Doge</h3><p>Ein Shiba Inu mit bunten Comic-Sans-Sprüchen in gebrochenem Englisch wird zu einem der bekanntesten Memes überhaupt.</p></li>
+      <li><span class="year">2017</span><h3>Vorlagen mit Beschriftung</h3><p>Stockfotos wie der „abgelenkte Freund“ werden zu Schablonen: Man beschriftet die Figuren und erzählt so jede beliebige Geschichte.</p></li>
+      <li><span class="year">2020er</span><h3>Sounds und Trends</h3><p>Auf Kurzvideo-Plattformen werden Tonspuren, Tänze und Filter zum Meme. Ein Trend kann heute in Stunden entstehen und wieder verschwinden.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="anatomy">
+  <div class="wrap">
+    <h2>So ist ein klassisches Meme gebaut</h2>
+    <p class="prose">Das „Image Macro“ ist das bekannteste Format. Es besteht fast immer aus drei Teilen:</p>
+    <div class="parts">
+      <div class="part"><h3>Der Aufbau oben</h3><p>Ein kurzer Satz in weißer Blockschrift mit schwarzer Kontur stellt die Situation vor.</p></div>
+      <div class="part"><h3>Das Bild in der Mitte</h3><p>Ein Tier, ein Gesicht oder eine Szene, die alle wiedererkennen – oft mit einem übertriebenen Ausdruck.</p></div>
+      <div class="part"><h3>Die Pointe unten</h3><p>Der zweite Satz dreht die Erwartung um. Je kürzer, desto besser.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="generator">
+  <div class="wrap">
+    <h2>Bau dein eigenes Meme</h2>
+    <p class="prose">Wähle ein Motiv, schreib oben den Aufbau und unten die Pointe.</p>
+    <div class="gen">
+      <div class="canvas" id="canvas" role="img" aria-live="polite">
+        <p class="t" id="outTop"></p>
+        <div class="e" id="outEmoji" aria-hidden="true">🦆</div>
+        <p class="t" id="outBottom"></p>
+      </div>
+      <div class="controls">
+        <label for="topText">Text oben</label>
+        <input type="text" id="topText" maxlength="60" value="Wenn der Wecker klingelt">
+        <label for="bottomText">Text unten</label>
+        <input type="text" id="bottomText" maxlength="60" value="Nur noch fünf Minuten">
+        <span style="display:block;font-weight:600;margin-bottom:.35rem" id="pickLabel">Motiv</span>
+        <div class="pickers" role="group" aria-labelledby="pickLabel" id="pickers"></div>
+        <button class="btn" id="shuffle" type="button">Zufällige Idee</button>
+        <p class="hint">Tipp: Die besten Memes funktionieren auch ohne Erklärung.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="def">
+  <div class="wrap">
+    <h2>Gute Meme-Manieren</h2>
+    <div class="rules">
+      <div><h3>Nach unten treten ist nicht lustig</h3><p>Gute Memes machen sich über Situationen lustig, nicht über Menschen, die sich nicht wehren können.</p></div>
+      <div><h3>Erst prüfen, dann teilen</h3><p>Memes verbreiten auch Falschinformationen. Ein kurzer Faktencheck schadet nie.</p></div>
+      <div><h3>Privates bleibt privat</h3><p>Fotos von Freundinnen, Freunden oder Fremden nur mit deren Einverständnis verwenden.</p></div>
+      <div><h3>Urheber mitdenken</h3><p>Hinter vielen Vorlagen stehen Fotografen und Künstlerinnen. Wer die Quelle kennt, darf sie ruhig nennen.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Eine kleine Seite über Memes. Alle Motive sind Emojis, alle Texte selbst geschrieben.</div>
+</footer>
+
+<script>
+(function () {
+  var motifs = [
+    { e: "🦆", bg: "#2B59C3" },
+    { e: "🐱", bg: "#C2410C" },
+    { e: "🥔", bg: "#4D7C0F" },
+    { e: "🤔", bg: "#7C3AED" },
+    { e: "🐸", bg: "#0F766E" },
+    { e: "☕", bg: "#9F1239" }
+  ];
+  var ideas = [
+    ["Montagmorgen", "Kaffee ist ein Gemüse"],
+    ["Ich: nur ein Video", "Drei Stunden später"],
+    ["Wenn das WLAN kurz weg ist", "Zeit, mit der Familie zu reden"],
+    ["Hausaufgaben machen", "Erst mal Zimmer aufräumen"],
+    ["Wenn der Akku 1 % hat", "Maximale Konzentration"],
+    ["Diät ab morgen", "Seit 2019"]
+  ];
+  var current = 0;
+  var canvas = document.getElementById("canvas");
+  var top = document.getElementById("topText");
+  var bottom = document.getElementById("bottomText");
+  var outTop = document.getElementById("outTop");
+  var outBottom = document.getElementById("outBottom");
+  var outEmoji = document.getElementById("outEmoji");
+  var pickers = document.getElementById("pickers");
+
+  motifs.forEach(function (m, i) {
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "pick"; b.textContent = m.e;
+    b.setAttribute("aria-pressed", i === 0 ? "true" : "false");
+    b.setAttribute("aria-label", "Motiv " + (i + 1));
+    b.addEventListener("click", function () { current = i; render(); });
+    pickers.appendChild(b);
+  });
+
+  function render() {
+    var m = motifs[current];
+    canvas.style.background = m.bg;
+    outEmoji.textContent = m.e;
+    outTop.textContent = top.value;
+    outBottom.textContent = bottom.value;
+    canvas.setAttribute("aria-label", "Meme: " + top.value + " – " + bottom.value);
+    Array.prototype.forEach.call(pickers.children, function (b, i) {
+      b.setAttribute("aria-pressed", i === current ? "true" : "false");
+    });
+  }
+  top.addEventListener("input", render);
+  bottom.addEventListener("input", render);
+  document.getElementById("shuffle").addEventListener("click", function () {
+    var idea = ideas[Math.floor(Math.random() * ideas.length)];
+    top.value = idea[0]; bottom.value = idea[1];
+    current = Math.floor(Math.random() * motifs.length);
+    render();
+  });
+  render();
+})();
+</script>
+</body>
+</html>
